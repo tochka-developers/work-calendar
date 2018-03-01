@@ -1,0 +1,28 @@
+{
+    "name": "tochka/carbon-production",
+    "description": "Russian Federation production calendar extension for Carbon",
+    "type": "package",
+    "version":"1.0.0",
+    "authors": [
+        {
+            "name": "Ivanov Sergey",
+            "email": "ivanov@tochka.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Tochka\\Calendar\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "nesbot/carbon": "1.22.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7"
+    }
+}
