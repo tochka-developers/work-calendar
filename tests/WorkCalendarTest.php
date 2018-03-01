@@ -8,7 +8,7 @@ use Tochka\Calendar\WorkCalendar;
 /**
  * Тестируем класс WorkCalendar
  *
- * @author ivanov
+ * @author Ivanov Sergey<ivanov@tochka.com>
  */
 class WorkCalendarTest extends TestCase
 {

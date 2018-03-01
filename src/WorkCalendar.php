@@ -6,18 +6,27 @@ use Carbon\Carbon;
 use Exception;
 
 /**
- * Description of WorkCalendar
+ * Надстройка над Carbon, которая позволяет
+ * легко оперировать рабочими днями по ТК РФ
  *
- * @author ivanov
+ * @author Ivanov Sergey<ivanov@tochka.com>
  */
 class WorkCalendar extends Carbon
 {
-    const RES_DIR = __DIR__ . '/../resources/';
+    /**
+     * Директория, в которую кешируются
+     * маски рабочих дней по годам
+     */
+    public static $RES_DIR = __DIR__ . '/../resources/';
 
+    /**
+     * Массив с масками по годам
+     */
     private static $yearMasks = [];
 
     /**
      * @param int $year Год в формате ГГГГ
+     * @throws Exception
      */
     public static function getYearMask(int $year)
     {
@@ -30,19 +39,21 @@ class WorkCalendar extends Carbon
 
     /**
      * @param int $year Год в формате ГГГГ
+     * @throws Exception
      */
     protected static function getYearMaskFromResources(int $year)
     {
-        if (file_exists(self::RES_DIR . $year)) {
-            $content = @ file_get_contents(self::RES_DIR . $year);
+        $fileName = static::$RES_DIR . $year;
+        if (file_exists($fileName)) {
+            $content = @ file_get_contents($fileName);
             if ($content === false) {
-                //exception
+                throw new Exception('Failed to read file: ');
             }
 
             return json_decode($content, true);
         } else {
             $workdaysYearMask = self::generateYearMask($year);
-            file_put_contents(self::RES_DIR . $year, json_encode($workdaysYearMask));
+            file_put_contents($fileName, json_encode($workdaysYearMask));
 
             return $workdaysYearMask;
         }
