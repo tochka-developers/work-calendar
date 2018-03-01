@@ -182,14 +182,17 @@ class WorkCalendar extends Carbon
     {
         $workdaysDiffCount = 0;
 
-        /** @var int */
         $daysDiffCount = $this->diffInDays($carbon, false);
         if ($daysDiffCount > 0) {
-            // $carbon меньше текущей даты
-            $initialDate = $carbon;
-        } else {
             // $carbon больше текущей даты
             $initialDate = $this->copy();
+            $revert = false;
+        } else {
+            // $carbon меньше текущей даты
+            $initialDate = $carbon;
+            $revert = true;
+
+            $daysDiffCount = abs($daysDiffCount);
         }
 
         for ($i = 1; $i <= $daysDiffCount; $i++) {
@@ -197,6 +200,10 @@ class WorkCalendar extends Carbon
             if ($initialDate->isWorkday()) {
                 $workdaysDiffCount++;
             }
+        }
+
+        if ($revert) {
+            $workdaysDiffCount = -$workdaysDiffCount;
         }
 
         return $workdaysDiffCount;

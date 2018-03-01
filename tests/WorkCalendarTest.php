@@ -107,4 +107,79 @@ class WorkCalendarTest extends TestCase
         $date->subWorkday();
         $this->assertEquals($expected, $date->format('Y-m-d'));
     }
+
+    public function addWorkdaysDataProvider()
+    {
+        return [
+            ['2018-01-01', 3, '2018-01-11'],
+            ['2018-01-01', 5, '2018-01-15'],
+            ['2018-01-01', 10, '2018-01-22'],
+            ['2018-04-27', 5, '2018-05-08'],
+            ['2018-06-13', 1, '2018-06-14'],
+            ['2018-11-10', 7, '2018-11-20'],
+        ];
+    }
+
+    /**
+     * @dataProvider addWorkdaysDataProvider
+     */
+    public function testAddWorkdays($initialDateString, $addDays, $expected)
+    {
+        list($year, $month, $day) = explode('-', $initialDateString);
+        $date = WorkCalendar::create($year, $month, $day);
+        $date->addWorkdays($addDays);
+        $this->assertEquals($expected, $date->format('Y-m-d'));
+    }
+
+    public function subWorkdaysDataProvider()
+    {
+        return [
+            ['2018-01-10', 5, '2017-12-26'],
+            ['2018-02-28', 3, '2018-02-22'],
+            ['2018-03-07', 10, '2018-02-20'],
+            ['2018-11-20', 7, '2018-11-09'],
+            ['2018-12-14', 2, '2018-12-12'],
+        ];
+    }
+
+    /**
+     * @dataProvider subWorkdaysDataProvider
+     */
+    public function testSubWorkdays($initialDateString, $addDays, $expected)
+    {
+        list($year, $month, $day) = explode('-', $initialDateString);
+        $date = WorkCalendar::create($year, $month, $day);
+        $date->subWorkdays($addDays);
+        $this->assertEquals($expected, $date->format('Y-m-d'));
+    }
+
+    public function diffInWorkdaysDataProvider()
+    {
+        return [
+            ['2017-12-25', '2018-02-01', 22],
+            ['2018-04-25', '2018-05-05', 5],
+            ['2018-05-05', '2018-04-25', -5],
+            ['2018-06-01', '2018-06-10', 6],
+            ['2018-06-21', '2018-06-21', 0],
+            ['2018-06-21', '2018-06-22', 1],
+            ['2018-06-21', '2018-06-20', -1],
+            ['2018-06-09', '2018-06-13', 1],
+        ];
+    }
+
+    /**
+     * @dataProvider diffInWorkdaysDataProvider
+     */
+    public function testDiffInWorkdays($firstDateString, $secondDateString, $workdaysDiffCount)
+    {
+        list($year, $month, $day) = explode('-', $firstDateString);
+        $firstDate = WorkCalendar::create($year, $month, $day);
+
+        list($year, $month, $day) = explode('-', $secondDateString);
+        $secondDate = WorkCalendar::create($year, $month, $day);
+
+        $actualWorkdaysDiffCount = $firstDate->diffInWorkdays($secondDate);
+
+        $this->assertEquals($workdaysDiffCount, $actualWorkdaysDiffCount);
+    }
 }
