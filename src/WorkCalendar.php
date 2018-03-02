@@ -138,6 +138,7 @@ class WorkCalendar extends Carbon
      */
     public function addWorkdays(int $count)
     {
+        $count = abs($count);
         while ($count > 0) {
             $this->addDay();
 
@@ -162,6 +163,7 @@ class WorkCalendar extends Carbon
      */
     public function subWorkdays(int $count)
     {
+        $count = abs($count);
         while ($count > 0) {
             $this->subDay();
 
@@ -176,7 +178,7 @@ class WorkCalendar extends Carbon
      *
      * @return bool
      */
-    public function isWorkday()
+    public function isWorkday(): bool
     {
         $mask = self::getYearMask($this->year);
         return (boolean)$mask[$this->dayOfYear];
@@ -189,7 +191,7 @@ class WorkCalendar extends Carbon
      * @param WorkCalendar $carbon Дата, с которой надо
      * @return int
      */
-    public function diffInWorkdays(WorkCalendar $carbon)
+    public function diffInWorkdays(WorkCalendar $carbon): int
     {
         $workdaysDiffCount = 0;
 
