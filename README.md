@@ -36,5 +36,5 @@ $date->subWorkdays(5);
 print_r($date->format('Y-m-d') // 2018-02-22
 ```
 ### Источники
-[Производственный календарь в XML-формате](http://xmlcalendar.ru/)
-[Производственный календарь в удобном для человека формате](http://www.consultant.ru/law/ref/calendar/proizvodstvennye/2018/)    
+* [Производственный календарь в XML-формате](http://xmlcalendar.ru/)
+* [Производственный календарь в удобном для человека формате](http://www.consultant.ru/law/ref/calendar/proizvodstvennye/2018/)
