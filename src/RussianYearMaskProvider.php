@@ -3,10 +3,11 @@
 namespace Tochka\Calendar;
 
 use Exception;
+
 /**
- * Description of AbstractYearMaskProvider
+ * Маски рабочих дней для РФ
  *
- * @author ivanov
+ * @author Ivanov Sergey<ivanov@tochka.com>
  */
 class RussianYearMaskProvider extends AbstractYearMaskProvider
 {
