@@ -15,6 +15,7 @@ class WorkCalendarTest extends TestCase
     public function isWorkdayDataProvider()
     {
         return [
+            ['2016-02-29', true],
             ['2018-01-01', false],
             ['2018-01-08', false],
             ['2018-01-09', true],
