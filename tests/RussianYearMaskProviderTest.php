@@ -15,24 +15,24 @@ class RussianYearMaskProviderTest extends TestCase
     public function getYearMaskOkDataProvider()
     {
         return [
-            [2013],
-            [2014],
-            [2015],
-            [2016],
-            [2017],
-            [2018],
+            [2013, 365],
+            [2014, 365],
+            [2015, 365],
+            [2016, 366],
+            [2017, 365],
+            [2018, 365],
         ];
     }
 
     /**
      * @dataProvider getYearMaskOkDataProvider
      */
-    public function testGetYearMaskOk($year)
+    public function testGetYearMaskOk($year, $daysCount)
     {
         $dataProvider = new RussianYearMaskProvider;
         $mask = $dataProvider->getYearMask($year);
 
-        $this->assertEquals(count($mask), 365);
+        $this->assertEquals(count($mask), $daysCount);
 
         $expectedMask = file_get_contents(RussianYearMaskProvider::RES_DIR . $year . '.json');
         $expectedMask = json_decode($expectedMask, true);

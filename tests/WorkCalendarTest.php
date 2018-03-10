@@ -16,6 +16,8 @@ class WorkCalendarTest extends TestCase
     {
         return [
             ['2016-02-29', true],
+            ['2016-12-30', true],
+            ['2016-12-31', false],
             ['2018-01-01', false],
             ['2018-01-08', false],
             ['2018-01-09', true],

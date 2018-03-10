@@ -15,7 +15,10 @@ class RussianYearMaskProvider extends AbstractYearMaskProvider
     
     protected function generateYearMask(int $year)
     {
-        $workdaysYearMask = array_fill(0, 365, 0);
+        $currentDate = new \DateTime($year.'-01-01 00:00');
+        $daysCount   = $currentDate->format('L') === '1' ? 366 : 365;
+
+        $workdaysYearMask = array_fill(0, $daysCount, 0);
 
         // для начала берем xml с
         // праздничными и сокращенными днями в РФ
@@ -42,8 +45,6 @@ class RussianYearMaskProvider extends AbstractYearMaskProvider
             }
         }
 
-        $currentDate = new \DateTime($year.'-01-01 00:00');
-        $daysCount = $currentDate->format('L') === '1' ? 365 : 364;
         // заполняем маску года днями отдыха
         for ($i = 0; $i < $daysCount; $i++) {
             $isHoliday = false;
