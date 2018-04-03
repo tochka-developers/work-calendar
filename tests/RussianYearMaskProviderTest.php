@@ -39,13 +39,4 @@ class RussianYearMaskProviderTest extends TestCase
 
         $this->assertEquals($expectedMask, $mask);
     }
-
-    /**
-     * @expectedException Exception
-     */
-    public function testGetYearMaskException()
-    {
-        $dataProvider = new RussianYearMaskProvider;
-        $mask = $dataProvider->getYearMask(1970);
-    }
 }
