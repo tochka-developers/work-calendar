@@ -25,7 +25,7 @@ class RussianYearMaskProvider extends AbstractYearMaskProvider
     protected function generateYearMask(int $year)
     {
         try {
-            list($holidays, $cutDays, $workdays) = $this->getDataFromXmlCalendar($year);
+            [$holidays, $cutDays, $workdays] = $this->getDataFromXmlCalendar($year);
         } catch (Exception $ex) {
             $holidays = $this->getCalculatedData($year);
             $cutDays = [];
@@ -102,12 +102,12 @@ class RussianYearMaskProvider extends AbstractYearMaskProvider
                 $date = DateTime::createFromFormat('Y.m.d', $year.'.'.$md);
                 $dateIndex = (int) $date->format('z');
 
-                $recType = (string) $dayXml['t'];
-                if ($recType == '1') {
+                $recType = (string)$dayXml['t'];
+                if ($recType === '1') {
                     $holidays[] = $dateIndex;
-                } elseif ($recType == '2') {
+                } elseif ($recType === '2') {
                     $cutWorkdays[] = $dateIndex;
-                } elseif ($recType == '3') {
+                } elseif ($recType === '3') {
                     $workdays[] = $dateIndex;
                 }
             }

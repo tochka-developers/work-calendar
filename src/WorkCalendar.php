@@ -13,7 +13,7 @@ use Exception;
  */
 class WorkCalendar extends Carbon
 {
-    const DEFAULT_MASK_PROVIDER = RussianYearMaskProvider::class;
+    public const DEFAULT_MASK_PROVIDER = RussianYearMaskProvider::class;
 
     private static $maskProvider;
 
@@ -24,14 +24,15 @@ class WorkCalendar extends Carbon
     {
         static::$maskProvider = $provider;
     }
-
+    
     /**
      * @param int $year Год в формате ГГГГ
-     * @throws Exception
+     *
+     * @return mixed
      */
     public static function getYearMask(int $year)
     {
-        if (is_null(static::$maskProvider)) {
+        if (static::$maskProvider === null) {
             $className = static::DEFAULT_MASK_PROVIDER;
             static::$maskProvider = new $className;
         }
@@ -97,7 +98,8 @@ class WorkCalendar extends Carbon
     public function isWorkday(): bool
     {
         $mask = self::getYearMask($this->year);
-        return (boolean)$mask[$this->dayOfYear];
+    
+        return (boolean)$mask[$this->dayOfYear-1];
     }
 
     /**
