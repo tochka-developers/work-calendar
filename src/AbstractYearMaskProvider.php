@@ -11,7 +11,7 @@ use Exception;
  */
 abstract class AbstractYearMaskProvider
 {
-    const RES_DIR = __DIR__ . '/../resources/';
+    public const RES_DIR = __DIR__ . '/../resources/';
 
     /** @var array Массив масок с рабочими днями по годам */
     protected $yearMasks = [];
@@ -37,18 +37,18 @@ abstract class AbstractYearMaskProvider
     {
         $fileName = static::RES_DIR . $year . '.json';
         if (file_exists($fileName)) {
-            $content = @ file_get_contents($fileName);
+            $content = @file_get_contents($fileName);
             if ($content === false) {
                 throw new Exception('Failed to read file: ');
             }
 
             return json_decode($content, true);
-        } else {
-            $workdaysYearMask = $this->generateYearMask($year);
-            file_put_contents($fileName, json_encode($workdaysYearMask));
-
-            return $workdaysYearMask;
         }
+        
+        $workdaysYearMask = $this->generateYearMask($year);
+        file_put_contents($fileName, json_encode($workdaysYearMask));
+
+        return $workdaysYearMask;
     }
 
     /**

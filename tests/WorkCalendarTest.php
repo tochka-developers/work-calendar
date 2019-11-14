@@ -89,6 +89,9 @@ class WorkCalendarTest extends TestCase
             ['1970-11-03', true],
             ['1970-11-04', false],
             ['1970-11-05', true],
+    
+            ['2020-01-02', false],
+            ['2020-01-14', true],
         ];
     }
 
@@ -97,8 +100,9 @@ class WorkCalendarTest extends TestCase
      */
     public function testIsWorkday($dateString, $expected)
     {
-        list($year, $month, $day) = explode('-', $dateString);
-        $date = WorkCalendar::create($year, $month, $day);
+        [$year, $month, $day] = explode('-', $dateString);
+        $date = WorkCalendar::createFromDate($year, $month, $day);
+        
         $this->assertEquals($expected, $date->isWorkday());
     }
 
@@ -122,7 +126,7 @@ class WorkCalendarTest extends TestCase
      */
     public function testAddWorkday($initialDateString, $expected)
     {
-        list($year, $month, $day) = explode('-', $initialDateString);
+        [$year, $month, $day] = explode('-', $initialDateString);
         $date = WorkCalendar::create($year, $month, $day);
         $date->addWorkday();
         $this->assertEquals($expected, $date->format('Y-m-d'));
@@ -146,7 +150,7 @@ class WorkCalendarTest extends TestCase
      */
     public function testSubWorkday($initialDateString, $expected)
     {
-        list($year, $month, $day) = explode('-', $initialDateString);
+        [$year, $month, $day] = explode('-', $initialDateString);
         $date = WorkCalendar::create($year, $month, $day);
         $date->subWorkday();
         $this->assertEquals($expected, $date->format('Y-m-d'));
@@ -169,7 +173,7 @@ class WorkCalendarTest extends TestCase
      */
     public function testAddWorkdays($initialDateString, $addDays, $expected)
     {
-        list($year, $month, $day) = explode('-', $initialDateString);
+        [$year, $month, $day] = explode('-', $initialDateString);
         $date = WorkCalendar::create($year, $month, $day);
         $date->addWorkdays($addDays);
         $this->assertEquals($expected, $date->format('Y-m-d'));
@@ -191,7 +195,7 @@ class WorkCalendarTest extends TestCase
      */
     public function testSubWorkdays($initialDateString, $addDays, $expected)
     {
-        list($year, $month, $day) = explode('-', $initialDateString);
+        [$year, $month, $day] = explode('-', $initialDateString);
         $date = WorkCalendar::create($year, $month, $day);
         $date->subWorkdays($addDays);
         $this->assertEquals($expected, $date->format('Y-m-d'));
@@ -216,10 +220,10 @@ class WorkCalendarTest extends TestCase
      */
     public function testDiffInWorkdays($firstDateString, $secondDateString, $workdaysDiffCount)
     {
-        list($year, $month, $day) = explode('-', $firstDateString);
+        [$year, $month, $day] = explode('-', $firstDateString);
         $firstDate = WorkCalendar::create($year, $month, $day);
 
-        list($year, $month, $day) = explode('-', $secondDateString);
+        [$year, $month, $day] = explode('-', $secondDateString);
         $secondDate = WorkCalendar::create($year, $month, $day);
 
         $actualWorkdaysDiffCount = $firstDate->diffInWorkdays($secondDate);
