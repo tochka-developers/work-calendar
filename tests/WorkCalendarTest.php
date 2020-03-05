@@ -229,5 +229,7 @@ class WorkCalendarTest extends TestCase
         $actualWorkdaysDiffCount = $firstDate->diffInWorkdays($secondDate);
 
         $this->assertEquals($workdaysDiffCount, $actualWorkdaysDiffCount);
+        $this->assertEquals($firstDateString, $firstDate->format('Y-m-d'));
+        $this->assertEquals($secondDateString, $secondDate->format('Y-m-d'));
     }
 }

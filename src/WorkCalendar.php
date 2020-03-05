@@ -120,7 +120,7 @@ class WorkCalendar extends Carbon
             $revert = false;
         } else {
             // $carbon меньше текущей даты
-            $initialDate = $carbon;
+            $initialDate = $carbon->copy();
             $revert = true;
 
             $daysDiffCount = abs($daysDiffCount);
