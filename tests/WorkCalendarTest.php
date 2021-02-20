@@ -92,6 +92,10 @@ class WorkCalendarTest extends TestCase
     
             ['2020-01-02', false],
             ['2020-01-14', true],
+
+            ['2021-01-20', true],
+            ['2021-02-20', true],
+            ['2021-02-21', false],
         ];
     }
 
